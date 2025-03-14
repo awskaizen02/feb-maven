@@ -1,10 +1,14 @@
 pipeline {
     agent any
+    parameters {
+     choice(name: 'BRANCHES', choices: ['war', 'jar', 'master'], description: '')  }
+    triggers { cron('H/05 * * * *')     }
+    
 
     stages {
         stage('SCM') {
             steps {
-                git branch: 'war', url: 'https://github.com/awskaizen02/feb-maven.git'
+                git branch: "${params.BRANCHES}", url: 'https://github.com/awskaizen02/feb-maven.git'
             }
         }
         stage('build') {
@@ -21,3 +25,4 @@ pipeline {
 
     }
 }
+
