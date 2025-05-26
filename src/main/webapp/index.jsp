@@ -12,7 +12,7 @@
 		        <p>This is the index page of your Maven web app.</p>
 
 
-		<h1>First piplienile project</h1>	
+		<h1>First Poll-SCM project</h1>	
 
 	</body>
 </html>
