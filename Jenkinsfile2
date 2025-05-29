@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+    parameters {
+        choice(name: 'BRANCH', choices: ['master', 'war', 'jar'], description: 'choose the build')
+    }    
+
+    stages {
+        stage('CODE') {
+            steps {
+                git branch: "${params.BRANCH}", url: 'https://github.com/awskaizen02/feb-maven.git'
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                bat 'mvn clean'
+                bat 'mvn install'
+            }
+        }
+        
+        stage('Deploy') {
+            when {
+                expression { params.BRANCH == 'war' }
+            }
+            steps {
+                input message: 'Deploy to Production?', ok: 'Deploy'
+                milestone(1)
+                
+                deploy adapters: [tomcat9(
+                    alternativeDeploymentContext: '', 
+                    credentialsId: 'tomcat_9', 
+                    path: '', 
+                    url: 'http://localhost:9999/'
+                )], 
+                contextPath: '2ndpipline', 
+                war: '**/*.war'
+            }
+        }
+    }
+}
