@@ -1,0 +1,22 @@
+pipeline {
+    agent  {
+        label 'test' // Matches the label you gave your slave
+    }
+ parameters {
+	 choice(name: 'BRANCH', choices: ['master', 'war', 'jar'], description: 'choose the build')
+	 }	
+
+    stages {
+        stage('CODE') {
+            steps {
+                git branch: "${params.BRANCH}", url: 'https://github.com/awskaizen02/feb-maven.git'
+            }
+        }
+	stage('Build') {
+            steps {
+                sh 'mvn clean'
+		sh 'mvn install'
+            }
+        }
+    }
+}
