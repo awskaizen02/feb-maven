@@ -25,6 +25,18 @@ pipeline {
             }
         }
 
+       stage('Push Docker Image to Docker Repo') {
+            steps {
+                script{
+			docker.withRegistry('https://registry.hub.docker.com', 'deploy-docker'){
+			app.push("${env.BUILD_NUMBER}")
+			app.push("latest")
+		}
+			}
+            }
+        }
+
+
 
        }
 
