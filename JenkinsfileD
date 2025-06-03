@@ -1,0 +1,19 @@
+pipeline {
+    agent any
+   
+
+    stages {
+        stage('SCM') {
+            steps {
+                git branch: 'war', url: 'https://github.com/awskaizen02/feb-maven.git'
+            }
+        }
+       stage('build') {
+            steps {
+                bat 'mvn clean'
+                bat 'mvn install'
+            }
+        }
+       }
+
+    }
