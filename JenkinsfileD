@@ -25,5 +25,15 @@ pipeline {
 				}
 			}
 					}
+stage('Push Docker Image to Docker hub'){
+	steps{
+		script{
+			docker.withRegistry('https://registry.hub.docker.com', 'DD'){
+			app.push("${env.BUILD_NUMER}")
+			app.push("latest")
+					  }
+			}
+		}
+							}
     }
 }
