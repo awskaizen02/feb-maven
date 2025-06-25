@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+ parameters {
+	 choice(name: 'BRANCH', choices: ['master', 'war', 'jar','d1'], description: 'choose the build')
+	 }	
+
+    stages {
+        stage('CODE') {
+            steps {
+                git branch: "${params.BRANCH}", url: 'https://github.com/awskaizen02/feb-maven.git'
+            }
+        }
+    stage('Build') {
+            steps {
+                sh 'mvn clean'
+		        sh 'mvn install'
+            }
+        }
+
+	stage('Build Docker Image'){
+     		steps{
+		   script{
+             		app = docker.build("dockerpandian/juneweb")
+			app.inside {
+				sh'echo$(curl localhost:8080)'	
+			           }
+				}
+			}
+					}
+    }
+}
