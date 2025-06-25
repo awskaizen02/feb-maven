@@ -1,13 +1,11 @@
 pipeline {
     agent any
- parameters {
-	 choice(name: 'BRANCH', choices: ['master', 'war', 'jar','d1'], description: 'choose the build')
-	 }	
+
 
     stages {
         stage('CODE') {
             steps {
-                git branch: "${params.BRANCH}", url: 'https://github.com/awskaizen02/feb-maven.git'
+                git branch: 'd1', url: 'https://github.com/awskaizen02/feb-maven.git'
             }
         }
     stage('Build') {
