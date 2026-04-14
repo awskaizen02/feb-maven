@@ -9,7 +9,7 @@
 	</head>
 	<body>
 		    <h1>Welcome to My Web Application web</h1>
-		        <p>This is the index page of your Maven web app.</p>
+		        <p>This is the index page of your Maven web app. webhooks</p>
 
 
 		<h1>First Poll-SCM project</h1>	
